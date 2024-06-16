@@ -25,8 +25,6 @@ async def user_registration(message: Message, bot: Bot, state: FSMContext):
             # elif chat_member.status == 'member':
             await message.answer("Введите ваше имя")
             await state.set_state(UserRegForm.GET_NAME)
-            # await message.answer('Только пользователи с подпиской на канал могут пройти регистрацию\n'
-            #                      'Для регистрации пройдите по ссылке: https://t.me/+Xe7A91ZRYcFlZGEy')
 
 
 async def get_user_name(message: Message, state: FSMContext):

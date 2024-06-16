@@ -5,11 +5,8 @@ from dotenv import load_dotenv
 import requests
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
-from sqlalchemy import select
 
-from data_base.models import Session, User
 from forms.forms import Weather
-from keyboards.reply import get_reply_keyboard
 
 load_dotenv()
 API = os.getenv("WEATHER_API")

@@ -1,14 +1,13 @@
 import asyncio
 import os
 
-from aiogram import Bot, Dispatcher, F, types
+from aiogram import Bot, Dispatcher, F
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import Command
-from aiogram.types import Message
+
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.cron import CronTrigger
-from datetime import datetime
+
 from dotenv import load_dotenv
 
 from app.admin import (
@@ -39,7 +38,7 @@ from app.pay import day_sub, month_sub, year_sub, pre_checkout_query, successful
 from commands.commands import set_commands
 from data_base.models import init_db
 from forms.forms import HoroscopeForm, UserRegForm, Weather, TimeForm, Admin
-from middlewaries.tg_sheduler import send_message_cron, every_day
+from middlewaries.tg_sheduler import every_day
 from register.user_reg import (
     user_registration,
     get_user_name,
@@ -62,14 +61,10 @@ async def main():
     dp = Dispatcher()
     bot = Bot(TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     await every_day(bot)
-    # scheduler = AsyncIOScheduler(timezone="Europe/Moscow")
-    # scheduler.start()
-    # scheduler.print_jobs()
     await set_commands(bot)
 
     # Admin pannel
     dp.message.register(get_admin_panel, Command(commands=["admin"]))
-    # dp.message.register(get_all_users, F.text == 'Список пользователей')
     dp.message.register(delete_user, F.text == "Удалить пользователя")
     dp.message.register(get_delete_user_id, Admin.DELETE_USER)
     dp.message.register(redact_user_params, F.text == "Изменить данные пользователя")
